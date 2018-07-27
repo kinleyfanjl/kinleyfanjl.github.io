@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Programming," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="Ph.D in statistics">
-<meta name="keywords" content="Machine Learning; Computational Statsitcs; High Dimensional Data">
+<meta name="description" content="作者：Roman Kierzkowski Jupyter Notebook（也被叫做 iPython Notebook）是非常使用的编程工具。它很适用于实现重复性实验。下面是我工作以来，对Jupyter Notebook总结的10条小技巧。 1.使用Virtualenv来创建隔离环境你可能想将所有的研究用哭都安装在你的操作系统里，并且在你所有的项目中共享。不久你会发现当你添加新的库时，被安装过的库">
+<meta name="keywords" content="Programming">
 <meta property="og:type" content="article">
-<meta property="og:title" content="trans1">
+<meta property="og:title" content="用好Jupyter Notebook的十个技巧">
 <meta property="og:url" content="http://yoursite.com/2018/07/27/trans1/index.html">
 <meta property="og:site_name" content="The Statistical Smurf">
-<meta property="og:description" content="Ph.D in statistics">
+<meta property="og:description" content="作者：Roman Kierzkowski Jupyter Notebook（也被叫做 iPython Notebook）是非常使用的编程工具。它很适用于实现重复性实验。下面是我工作以来，对Jupyter Notebook总结的10条小技巧。 1.使用Virtualenv来创建隔离环境你可能想将所有的研究用哭都安装在你的操作系统里，并且在你所有的项目中共享。不久你会发现当你添加新的库时，被安装过的库">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-07-27T09:27:13.795Z">
+<meta property="og:updated_time" content="2018-07-27T09:34:51.600Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="trans1">
-<meta name="twitter:description" content="Ph.D in statistics">
+<meta name="twitter:title" content="用好Jupyter Notebook的十个技巧">
+<meta name="twitter:description" content="作者：Roman Kierzkowski Jupyter Notebook（也被叫做 iPython Notebook）是非常使用的编程工具。它很适用于实现重复性实验。下面是我工作以来，对Jupyter Notebook总结的10条小技巧。 1.使用Virtualenv来创建隔离环境你可能想将所有的研究用哭都安装在你的操作系统里，并且在你所有的项目中共享。不久你会发现当你添加新的库时，被安装过的库">
 
 
 
@@ -126,7 +126,7 @@
 
 
 
-  <title>trans1 | The Statistical Smurf</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>用好Jupyter Notebook的十个技巧 | The Statistical Smurf</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -290,7 +290,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">trans1</h1>
+          <h1 class="post-title" itemprop="name headline">用好Jupyter Notebook的十个技巧</h1>
         
 
         <div class="post-meta">
@@ -340,7 +340,37 @@
       
 
       
-        
+        <p>作者：<a href="https://hackernoon.com/@r_kierzkowski?source=post_header_lockup" target="_blank" rel="noopener">Roman Kierzkowski</a></p>
+<p>Jupyter Notebook（也被叫做 iPython Notebook）是非常使用的编程工具。它很适用于实现重复性实验。下面是我工作以来，对Jupyter Notebook总结的10条小技巧。</p>
+<h4 id="1-使用Virtualenv来创建隔离环境"><a href="#1-使用Virtualenv来创建隔离环境" class="headerlink" title="1.使用Virtualenv来创建隔离环境"></a>1.使用Virtualenv来创建隔离环境</h4><p>你可能想将所有的研究用哭都安装在你的操作系统里，并且在你所有的项目中共享。不久你会发现当你添加新的库时，被安装过的库也可能会被更新。然而有的库不能够兼容新的版本，所以当你回到曾经的项目时，你会花费很多时间来寻找问题原因，并且修复它们。</p>
+<p>解决方法就是对你的每个项目都创建一个独立的虚拟环境。我建议通过<a href="https://virtualenvwrapper.readthedocs.io/en/latest/" target="_blank" rel="noopener">virtualenvwrapper</a>使用<a href="https://virtualenv.pypa.io/" target="_blank" rel="noopener">virtualenv</a>。为了免于虚拟环境的路径问题的困扰，你可以在每个环境中独自安装Jupyter。<br><a id="more"></a></p>
+<h4 id="2-使用Python-3"><a href="#2-使用Python-3" class="headerlink" title="2.使用Python 3"></a>2.使用Python 3</h4><p>版本3确实更好用。</p>
+<h4 id="3-包含-requirements-txt"><a href="#3-包含-requirements-txt" class="headerlink" title="3.包含 requirements.txt"></a>3.包含 requirements.txt</h4><p>当你的项目有了隔离的环境后，建议你保存项目必须的依赖关系列表。这会在你今后节约不少的时间。比如，当你想要重建一个环境的时候。</p>
+<p><code>$ pip freeze &gt; requirements.txt</code></p>
+<h4 id="4-在第一个Cell中完成所有的导入"><a href="#4-在第一个Cell中完成所有的导入" class="headerlink" title="4.在第一个Cell中完成所有的导入"></a>4.在第一个Cell中完成所有的导入</h4><p>在你的Notebook中的第一个cell里完成所有的库的导入。这个任务需要的工具和依赖库能够一目了然；当你重启notebook服务器的时候，你能够在一步运行中完成所有的导入。当你不想重新执行整个notebook的时候，这会很有用。</p>
+<p>我也会利用这个cell来定义所有需要的文件路径。</p>
+<h4 id="5-不要太拘泥小节，保留你的草稿"><a href="#5-不要太拘泥小节，保留你的草稿" class="headerlink" title="5.不要太拘泥小节，保留你的草稿"></a>5.不要太拘泥小节，保留你的草稿</h4><p>快点开始，随意一些。你越快开始你想做的越好，因为灵感很可能会稍纵即逝。但是当你发现你开始自乱阵脚，没有效率，开发过程变得一团乱麻，那么是时候开始整理你的notebook了。从头开始，保留好的代码，重写差的部分，但是不管你要做什么，都记住：保留你notebook上的草稿。</p>
+<h4 id="6-用函数来封装cell内容"><a href="#6-用函数来封装cell内容" class="headerlink" title="6.用函数来封装cell内容"></a>6.用函数来封装cell内容</h4><p>很多的notebook的cell看起来会像这样：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">parameter1 = <span class="number">1.0</span></span><br><span class="line">parameter2 = <span class="number">100</span></span><br><span class="line"></span><br><span class="line">step1 = X * parameter1</span><br><span class="line"></span><br><span class="line">step1 * parameter2</span><br></pre></td></tr></table></figure>
+<p>在cell开始一般都有参数定义。你可以改变参数然后重新执行，或者你可以复制整个cel然后来修改参数。经过中间的计算过程，最后会输出一行结果。</p>
+<p>在草稿里你可以这么做，但是随着项目的进展会变得难以管理。你有一大堆的中间变量填满了命名空间，你也失去了指引你到当前参数选择的步骤。</p>
+<p>作为替代，你可以把所有的东西打包成一个函数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> <span class="function"><span class="keyword">def</span> <span class="title">computation</span><span class="params">(parameter1=<span class="number">1.0</span>, parameter2=<span class="number">100</span>)</span>:</span></span><br><span class="line">	step1 = X * parameter1</span><br><span class="line">	<span class="keyword">return</span> step1 * parameter2</span><br><span class="line">		</span><br><span class="line">computation()</span><br><span class="line">...</span><br><span class="line">computation(parameter1=<span class="number">10.0</span>)</span><br></pre></td></tr></table></figure>
+<p>你可以修改参数并且重新运行在隔离的cell中，并且保持修改的历史记录。并且中间过程不会产生冗余的变量占用内存。</p>
+<h4 id="7-使用joblib来存储输出"><a href="#7-使用joblib来存储输出" class="headerlink" title="7.使用joblib来存储输出"></a>7.使用joblib来存储输出</h4><p>你花了三天来构思你的神经网络，并且现在你准备开始搭建。但是你忘了带你的手提电脑的充电线，而且它也快没电了。所以你尖叫道：我为什么没有保存？ 管理文件名，检查文件是否存在、保存、加载等等，有什么方法可以代替呢？使用<a href="https://pythonhosted.org/joblib/" target="_blank" rel="noopener">joblib</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.externals.joblib <span class="keyword">import</span> Memory</span><br><span class="line">memory = Memory(cachedir = <span class="string">'/tmp'</span>, verbose = <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">@memory.cache</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">computation</span><span class="params">(p1, p2)</span>:</span></span><br><span class="line">	...</span><br></pre></td></tr></table></figure>
+<p>利用这三行代码，你就能够存储任何函数的输出。Joblib会跟踪传入函数的参数，并且如果这个函数在使用相同参数的情况下被调用，它会返回在硬盘上存储的结果。</p>
+<h4 id="8-独立的notebook段落"><a href="#8-独立的notebook段落" class="headerlink" title="8.独立的notebook段落"></a>8.独立的notebook段落</h4><p>要松弛有度地对你的Notebook进行区域划分，并且尽可能少地使用全局变量。如果你用函数来封装cell，用joblib来储存输出，那么在不同的区域来调用这些代码简直易如反掌。相比较，通过注释让前面部分代码创造的变量更明确，远不如我们这里提到的标准化的方式。</p>
+<p>一般来说，在你打算重新开始来继续你之前的工作的时候，试着限制你必须要运行的cell的数量。</p>
+<h4 id="9-重用变量名"><a href="#9-重用变量名" class="headerlink" title="9.重用变量名"></a>9.重用变量名</h4><p>在你可以使用已经存在的变量名的时候，不要使用太长的变量名字。这似乎和我在讲解开发其他软件时候给出的建议相违背，但是在Notebook中，这种方法确实更有效。</p>
+<p>让我通过一个例子来讲解。我们假设你的算法需要一个集群。你尝试各种版本的集群和算法。你的代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">clusters_kmeans_k10 = KMeans(k=<span class="number">10</span>).fit_predict(X)</span><br><span class="line">clusters_kmean_k5 = KMeans(k=<span class="number">5</span>).fit_predict(X)</span><br><span class="line"><span class="comment"># many cells further</span></span><br><span class="line">algorithm1(clusters_kmeans_k10)</span><br><span class="line">algorithm2(clusters_kmeans_k10)</span><br><span class="line">algorithm1(clusters_kmeans_k5)</span><br><span class="line">algorithm2(clusters_kmeans_k5)</span><br></pre></td></tr></table></figure>
+<p>但是你利用joblib和重名变量，会有：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@memory.cache</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">kmeans</span><span class="params">(X, k)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> KMeans(k=k).fit_predict(X)</span><br><span class="line"><span class="comment"># many cells further</span></span><br><span class="line">clusters = kmeans(X, k=<span class="number">10</span>)</span><br><span class="line">algorithm1(clusters)</span><br><span class="line">algorithm2(clusters)</span><br><span class="line">clusters = kmeans(X, k=<span class="number">5</span>)</span><br><span class="line">algorithm1(clusters)</span><br><span class="line">algorithm2(clusters)</span><br></pre></td></tr></table></figure>
+<h4 id="10-利用声明来检测功能函数"><a href="#10-利用声明来检测功能函数" class="headerlink" title="10.利用声明来检测功能函数"></a>10.利用声明来检测功能函数</h4><p>当你构建了几个功能函数的时候，试着利用<em>assert</em>关键词来进行检测。比如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">norm_scale</span><span class="params">(X, axis=<span class="number">0</span>)</span>:</span></span><br><span class="line">    mx = np.max(X, axis=axis)</span><br><span class="line">    mi = np.min(X, axis=axis)</span><br><span class="line">    epsilon = <span class="number">10</span>**<span class="number">-32</span></span><br><span class="line">    <span class="keyword">return</span> (X — mi) / (np.abs(mi) + mx + epsilon)</span><br><span class="line">norm = norm_scale(X)</span><br><span class="line"><span class="keyword">assert</span> np.min(norm) &gt;= <span class="number">0</span></span><br><span class="line"><span class="keyword">assert</span> np.max(norm) &lt;= <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>以上就是我自己的小贴士。你自己在使用管理notebook过程中，有什么值得分享的经验吗？</p>
+
       
     </div>
     
@@ -354,6 +384,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Programming/" rel="tag"># Programming</a>
+          
+        </div>
       
 
       
@@ -374,8 +410,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/07/27/tran3/" rel="prev" title="tran3">
-                tran3 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/07/27/trans2/" rel="prev" title="强化学习与简单多臂老虎机问题">
+                强化学习与简单多臂老虎机问题 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -428,8 +464,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -444,7 +489,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -452,6 +497,15 @@
 
             
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
             
 
           </nav>
@@ -471,6 +525,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-使用Virtualenv来创建隔离环境"><span class="nav-number">1.</span> <span class="nav-text">1.使用Virtualenv来创建隔离环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-使用Python-3"><span class="nav-number">2.</span> <span class="nav-text">2.使用Python 3</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-包含-requirements-txt"><span class="nav-number">3.</span> <span class="nav-text">3.包含 requirements.txt</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-在第一个Cell中完成所有的导入"><span class="nav-number">4.</span> <span class="nav-text">4.在第一个Cell中完成所有的导入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-不要太拘泥小节，保留你的草稿"><span class="nav-number">5.</span> <span class="nav-text">5.不要太拘泥小节，保留你的草稿</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-用函数来封装cell内容"><span class="nav-number">6.</span> <span class="nav-text">6.用函数来封装cell内容</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-使用joblib来存储输出"><span class="nav-number">7.</span> <span class="nav-text">7.使用joblib来存储输出</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-独立的notebook段落"><span class="nav-number">8.</span> <span class="nav-text">8.独立的notebook段落</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-重用变量名"><span class="nav-number">9.</span> <span class="nav-text">9.重用变量名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10-利用声明来检测功能函数"><span class="nav-number">10.</span> <span class="nav-text">10.利用声明来检测功能函数</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

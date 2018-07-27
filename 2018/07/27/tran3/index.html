@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Quant," />
 
 
 
@@ -79,18 +79,22 @@
 
 
 
-<meta name="description" content="Ph.D in statistics">
-<meta name="keywords" content="Machine Learning; Computational Statsitcs; High Dimensional Data">
+<meta name="description" content="作者：Kelly Elmsrom  以下是Balch博士在Quantcon 2015上演讲的简单记录。 回测是指对交易策略的一种模拟，用来评估一个交易策略如果被用于历史交易中的表现。交易回测经常被对冲基金以及其他研究者们使用，在用于真实交易之前进行策略评估。回测很有简直，因为能够让交易者快速评估以及抛弃一些交易策略。 在模拟中看起来很棒的策略常常不能够在实际交易中达到他们自己的高标准。失败的理由很">
+<meta name="keywords" content="Quant">
 <meta property="og:type" content="article">
-<meta property="og:title" content="tran3">
+<meta property="og:title" content="在量化交易回测中容易犯的9个错误">
 <meta property="og:url" content="http://yoursite.com/2018/07/27/tran3/index.html">
 <meta property="og:site_name" content="The Statistical Smurf">
-<meta property="og:description" content="Ph.D in statistics">
+<meta property="og:description" content="作者：Kelly Elmsrom  以下是Balch博士在Quantcon 2015上演讲的简单记录。 回测是指对交易策略的一种模拟，用来评估一个交易策略如果被用于历史交易中的表现。交易回测经常被对冲基金以及其他研究者们使用，在用于真实交易之前进行策略评估。回测很有简直，因为能够让交易者快速评估以及抛弃一些交易策略。 在模拟中看起来很棒的策略常常不能够在实际交易中达到他们自己的高标准。失败的理由很">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-07-27T09:27:26.690Z">
+<meta property="og:image" content="https://blog.quantopian.com/wp-content/uploads/2015/04/1TuckerBalch2012SP500.png">
+<meta property="og:image" content="https://blog.quantopian.com/wp-content/uploads/2015/04/2TuckerBalch20122008SP500.png">
+<meta property="og:image" content="https://blog.quantopian.com/wp-content/uploads/2015/04/3TuckerBalchArg.png">
+<meta property="og:updated_time" content="2018-07-27T09:34:34.305Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="tran3">
-<meta name="twitter:description" content="Ph.D in statistics">
+<meta name="twitter:title" content="在量化交易回测中容易犯的9个错误">
+<meta name="twitter:description" content="作者：Kelly Elmsrom  以下是Balch博士在Quantcon 2015上演讲的简单记录。 回测是指对交易策略的一种模拟，用来评估一个交易策略如果被用于历史交易中的表现。交易回测经常被对冲基金以及其他研究者们使用，在用于真实交易之前进行策略评估。回测很有简直，因为能够让交易者快速评估以及抛弃一些交易策略。 在模拟中看起来很棒的策略常常不能够在实际交易中达到他们自己的高标准。失败的理由很">
+<meta name="twitter:image" content="https://blog.quantopian.com/wp-content/uploads/2015/04/1TuckerBalch2012SP500.png">
 
 
 
@@ -126,7 +130,7 @@
 
 
 
-  <title>tran3 | The Statistical Smurf</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>在量化交易回测中容易犯的9个错误 | The Statistical Smurf</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -290,7 +294,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">tran3</h1>
+          <h1 class="post-title" itemprop="name headline">在量化交易回测中容易犯的9个错误</h1>
         
 
         <div class="post-meta">
@@ -340,7 +344,60 @@
       
 
       
-        
+        <p>作者：<a href="https://blog.quantopian.com/author/kelmstrom/" target="_blank" rel="noopener">Kelly Elmsrom</a> </p>
+<p>以下是Balch博士在<a href="http://www.quantcon.com/" target="_blank" rel="noopener">Quantcon 2015</a>上演讲的简单记录。</p>
+<p>回测是指对交易策略的一种模拟，用来评估一个交易策略如果被用于历史交易中的表现。交易回测经常被对冲基金以及其他研究者们使用，在用于真实交易之前进行策略评估。回测很有简直，因为能够让交易者快速评估以及抛弃一些交易策略。</p>
+<p>在模拟中看起来很棒的策略常常不能够在实际交易中达到他们自己的高标准。失败的理由很多，其中有一部分超出交易者的控制能力。但是其他的失败都是由常见的，潜在的错误导致的。</p>
+<p>一个太乐观的回测能导致很多代价。我想和你分享9个在开发交易策略和评估中最常见的陷阱，这些陷阱会导致过度乐观的回测结果，进而帮你避免一些损失。<br><a id="more"></a></p>
+<h4 id="1-样本内的回测"><a href="#1-样本内的回测" class="headerlink" title="1.样本内的回测"></a>1.样本内的回测</h4><p>许多策略需要训练某些模型并且不断改进。例如，一个回归模型用来预测未来价格，它可能需要用最近的数据来建模。这个方法没有问题，但是不能用相同时间的数据来进行回测。如果你这么做的话，这个模型一定看起来很完美。</p>
+<p>但是不要相信他们。</p>
+<p><strong>解决办法：</strong>最好的方法就是避免用你训练的数据来进行回测。简单来说就是你用2007年的数据来建模，2008年之后的数据来进行回测。</p>
+<p>顺便说一下，即使你用的都是“样本外”的检测方法，但是不建议你使用后期的数据来建模，比如2014年，用前期的数据来回测，比如2008-2013。这么做会导致很大的前视偏误。</p>
+<h4 id="2-使用幸存者偏差的数据"><a href="#2-使用幸存者偏差的数据" class="headerlink" title="2.使用幸存者偏差的数据"></a>2.使用幸存者偏差的数据</h4><p>假设我告诉你我发明了一种新的血压药品，并且用下面的策略来进行试验：</p>
+<ol>
+<li>随机选择500个试验者；</li>
+<li>5年内让他们每天服药；</li>
+<li>每天测量他们的血压； </li>
+</ol>
+<p>在实验的开始，参与者们的平均血压为160/110，在结束的时候血压为120/80（显著地更低，更好）。</p>
+<p>看起来是很好的结果吧？如果我告诉你在实验期内死亡了58个试验者呢？可能是那些高血压的患者死了！这很明显不是一个准确的实验，因为它只考虑了在实验最后还存活的人。</p>
+<p>同样的情况也会出现在回测中，如果回测使用的后期的股票来作为基地，进行早期股票的历史评估。一个常见的例子是用当前的S&amp;P500来评估一个策略。</p>
+<p>为什么这个方法不好呢？看下面的两个图解：</p>
+<p><img src="https://blog.quantopian.com/wp-content/uploads/2015/04/1TuckerBalch2012SP500.png" alt="1"></p>
+<p>图中绿色的线表示2012年属于S&amp;P 500的股票的曲线。注意到所有股票都从2008、2009的下跌中很好地反弹了。</p>
+<p><img src="https://blog.quantopian.com/wp-content/uploads/2015/04/2TuckerBalch20122008SP500.png" alt="2"></p>
+<p>真实的情况是，如果我们用S&amp;P500在2008年的股票，我们就会发现超过10%的公司都倒闭了。</p>
+<p>我们在Lucena Research的工作期间，看到了一些用了存在幸存者偏差的数据得到的策略，会带来每年3%-5%的收益“增加”。</p>
+<p><strong>解决办法：</strong>找到一些曾经的指数数据集，然后从中随机抽样来评估你的策略。</p>
+<h4 id="3-观察各种形式的前视偏差"><a href="#3-观察各种形式的前视偏差" class="headerlink" title="3.观察各种形式的前视偏差"></a>3.观察各种形式的前视偏差</h4><p>在这种失败的例子中，交易者假定他能够观测到闭市价格，进一步计算一个指标，然后在闭市之后还进行交易。例如，一个人可能用闭市价格来计算一个用于策略中的技术因子，然后基于这个信息来进行交易。</p>
+<p>这是一个特定的前视偏差的例子，策略能够获得一点未来的信息。在我的工作经历中，我经常看到一点点的前视偏差就能够提供很可观的（也是虚假的）收益。</p>
+<p>其他的前视偏差的例子都是错误地利用了收益报告或者新闻的数据。比如，假定了一个交易者可以在同一天基于已公布的收益来进行交易，即使收益报告在闭市后才会公布。</p>
+<p><strong>解决方法：</strong>在第二天，相应信息能够获得之前，不要进行交易。</p>
+<h4 id="4-忽略市场冲击"><a href="#4-忽略市场冲击" class="headerlink" title="4.忽略市场冲击"></a>4.忽略市场冲击</h4><p>交易一进行就会影响价格。历史的价格数据没有包含你的交易，因此它们也不能准确地反应你参与市场交易后的收益。</p>
+<p>考虑下面这幅图，是我帮助开发的一个真实交易策略的表现。考虑区域A，第一部分上升的橘色线。这个区域是我们回测的表现。这个策略有很高的夏普比率，超过7.0。基于那段时间的信息（在A处截止），事情看起来很棒，我们开始了真实交易。</p>
+<p>当我开始真实交易的时候，我们发现真实表现在图上是这样的，对应着区域B的绿色线条，很平坦。这个策略失效了，所以几周后我们停止了交易。在我们停止交易后，模拟交易中我们再一次表现的很好（区域C）。</p>
+<p><img src="https://blog.quantopian.com/wp-content/uploads/2015/04/3TuckerBalchArg.png" alt="3"></p>
+<p>这是怎么回事呢？我们猜测误差来源于我们的预测模型，所以我们再次在我们的“真实交易”区域进行了回测，得到的也是同样的平坦曲线。在7.0的夏普指数区域和这个平台区域之间唯一的区别就是我们在平坦区域参与了市场交易。</p>
+<p>发生了什么？答案很简单，我们参与市场交易造成了这一影响。我们在建模时候没有考虑必要的市场影响。一旦我们加上了更准确的特征，我们的回测就会在区域A中展示一个平坦的、没有收益的结果。如果我们最开始这么做了，我们可能永远不会实现这个交易策略。</p>
+<p><strong>解决办法：</strong>要明确你在任何一个交易行为中，都会导致与你相对立的价格变动。对于一些只占总交易量很小部分的交易，一个常用的衡量标准是S&amp;P 500占比5bps，上至一些交易不太频繁的股票交易量的50bps。所以，这些都取决于你的交易策略试图交易多少。</p>
+<h4 id="5-从一个-1M的公司购买-10M"><a href="#5-从一个-1M的公司购买-10M" class="headerlink" title="5.从一个\$1M的公司购买\$10M"></a>5.从一个\$1M的公司购买\$10M</h4><p>没有经验的回测测试者可能会允许一个策略买卖尽可能多的资产。这可能会提供一个具有误导性的乐观的回测结果，因为它准许对小公司分配大的配额。</p>
+<p>交易不频繁的股票中常有真实利润，数据挖掘方法很可能找它们。考虑一下，为什么看起来会有利润存在呢？原因在于，大型的对冲基金不会参与其中，因为他们不能把他们的策略用在非流动资产上。虽然小的公司可能会有大把的回报，但是请确定你没有从一个\$1M的公司购买了\$10M的资产。</p>
+<p><strong>解决办法：</strong>在你的回测中限制交易量与资产总额的比重。另外从每日的交易额中过滤点潜在资产。</p>
+<h4 id="6-模型过拟合"><a href="#6-模型过拟合" class="headerlink" title="6.模型过拟合"></a>6.模型过拟合</h4><p>一个过拟合的模型就会导致模型样本内表现极好。它的预测结果好以至于对书中的噪声进行了建模，而不是考量数据中你真正关心的潜在的关系。</p>
+<p>这里有个更严格的对过拟合的定义：当模型的自由度增加时，如果样本内预测的误差下降并且样本外预测误差上升，就发生了过拟合。</p>
+<p>自由度是什么意思呢？自由度有很多种形式，要基于创建的模型讨论：使用的因子个数，参数化模型里的参数个数等。</p>
+<p><strong>解决办法：</strong>不要重复地利用样本内数据来改善你的模型，并且经常对比样本内外的误差。</p>
+<h4 id="7-相信复杂的模型"><a href="#7-相信复杂的模型" class="headerlink" title="7.相信复杂的模型"></a>7.相信复杂的模型</h4><p>复杂的模型经常会产生过拟合。从基本想法延伸出的简单方法不仅很合理，甚至可能是最好的模型。用大量因子的简单组合成的模型会很稳健，相比较用多因子训练的复杂模型而言，更不会出现过拟合现象。</p>
+<p><strong>解决办法：</strong>现在模型使用的因子，并且用简单的逻辑来组合它们。</p>
+<h4 id="8-相信状态策略"><a href="#8-相信状态策略" class="headerlink" title="8.相信状态策略"></a>8.相信状态策略</h4><p>对一个状态策略而言，其价值取决于过去它的开始日期。例如，一个策略很快的增加资产，它可能会被迅速投资因此就会失去后续的购买机会。如果一个策略晚一天开始，那么它的价值就会完全不同。</p>
+<p>有时，这种策略如果在不同的日子开始执行，会导致完全不同的结果。我曾见过，一个相同的策略在一周内的不同两天开始执行，回报率相差了50%。</p>
+<p><strong>解决方法：</strong>如果你的策略是状态性的，一定要测试一下不同执行日期的效果。并且评估一下结果的变异程度，如果太大，那你就要小心使用你的策略。</p>
+<h4 id="9-数据挖掘谬误"><a href="#9-数据挖掘谬误" class="headerlink" title="9.数据挖掘谬误"></a>9.数据挖掘谬误</h4><p>即使你避免了上述的所有陷阱，如果构建并且测试了足够多的策略，你总会找到一个回测效果很好的。然而，这个策略的效果是否真实有待考证，因为无法确认它是否为一个偶然猜测区分开。</p>
+<p>怎么能避免这个陷阱呢？好像无法避免。也许你可以在投入大量资本前，稍微测试一下。</p>
+<p><strong>解决办法：</strong>在投入资本前，进行模拟测试。</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>回测是用来否定一个策略的最好的方法，但不一定适合来肯定一个策略。能确定的是：如果回测没有效果的策略，那么实际投资中肯定效果不好。反过来却不一定：回测效果好，不见得实际投资中会很成功。</p>
+<p>不过，如果你避开了上述的全部陷阱，你制定的策略的回测结果能更好反应实际投资中的表现。</p>
+
       
     </div>
     
@@ -355,6 +412,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/Quant/" rel="tag"># Quant</a>
+          
+        </div>
+      
 
       
       
@@ -364,8 +427,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/07/27/trans1/" rel="next" title="trans1">
-                <i class="fa fa-chevron-left"></i> trans1
+              <a href="/2018/07/27/trans2/" rel="next" title="强化学习与简单多臂老虎机问题">
+                <i class="fa fa-chevron-left"></i> 强化学习与简单多臂老虎机问题
               </a>
             
           </div>
@@ -374,8 +437,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/07/27/tran4/" rel="prev" title="tran4">
-                tran4 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/07/27/tran4/" rel="prev" title="数据科学家需要了解的5种聚类算法">
+                数据科学家需要了解的5种聚类算法 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -428,8 +491,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -444,7 +516,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -452,6 +524,15 @@
 
             
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
             
 
           </nav>
@@ -471,6 +552,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-样本内的回测"><span class="nav-number">1.</span> <span class="nav-text">1.样本内的回测</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-使用幸存者偏差的数据"><span class="nav-number">2.</span> <span class="nav-text">2.使用幸存者偏差的数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-观察各种形式的前视偏差"><span class="nav-number">3.</span> <span class="nav-text">3.观察各种形式的前视偏差</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-忽略市场冲击"><span class="nav-number">4.</span> <span class="nav-text">4.忽略市场冲击</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-从一个-1M的公司购买-10M"><span class="nav-number">5.</span> <span class="nav-text">5.从一个\$1M的公司购买\$10M</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-模型过拟合"><span class="nav-number">6.</span> <span class="nav-text">6.模型过拟合</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-相信复杂的模型"><span class="nav-number">7.</span> <span class="nav-text">7.相信复杂的模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-相信状态策略"><span class="nav-number">8.</span> <span class="nav-text">8.相信状态策略</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-数据挖掘谬误"><span class="nav-number">9.</span> <span class="nav-text">9.数据挖掘谬误</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-number">10.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

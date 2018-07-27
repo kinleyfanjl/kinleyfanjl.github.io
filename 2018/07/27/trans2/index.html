@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Machine Learning," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="作者：Jeremi  基础我在series hub中介绍过最基本的强化学习的内容。在强化学习里有四个基本的概念会经常出现在相关的文章中，策略、奖励、价值函数以及环境模型。我会跳过模型这个部分，因为我们现在讨论的是不基于模型的学习理论。 策略：是强化学习机的核心，代表着决策进行的方式。它可能是一个表格，一个函数或者一个复杂的深度神经网络。 奖励信号：一个数值，代表着强化学习机采取行动后的即时奖励。最">
+<meta name="keywords" content="Machine Learning">
+<meta property="og:type" content="article">
+<meta property="og:title" content="强化学习与简单多臂老虎机问题">
+<meta property="og:url" content="http://yoursite.com/2018/07/27/trans2/index.html">
+<meta property="og:site_name" content="The Statistical Smurf">
+<meta property="og:description" content="作者：Jeremi  基础我在series hub中介绍过最基本的强化学习的内容。在强化学习里有四个基本的概念会经常出现在相关的文章中，策略、奖励、价值函数以及环境模型。我会跳过模型这个部分，因为我们现在讨论的是不基于模型的学习理论。 策略：是强化学习机的核心，代表着决策进行的方式。它可能是一个表格，一个函数或者一个复杂的深度神经网络。 奖励信号：一个数值，代表着强化学习机采取行动后的即时奖励。最">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://harderchoices.files.wordpress.com/2018/01/unknown-2.png?w=1100">
+<meta property="og:image" content="https://harderchoices.files.wordpress.com/2018/01/unknown-3.png?w=1100">
+<meta property="og:image" content="https://harderchoices.files.wordpress.com/2018/01/unknown-4.png?w=1100">
+<meta property="og:image" content="https://harderchoices.files.wordpress.com/2018/01/unknown.png?w=1100">
+<meta property="og:updated_time" content="2018-07-27T09:32:38.815Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="强化学习与简单多臂老虎机问题">
+<meta name="twitter:description" content="作者：Jeremi  基础我在series hub中介绍过最基本的强化学习的内容。在强化学习里有四个基本的概念会经常出现在相关的文章中，策略、奖励、价值函数以及环境模型。我会跳过模型这个部分，因为我们现在讨论的是不基于模型的学习理论。 策略：是强化学习机的核心，代表着决策进行的方式。它可能是一个表格，一个函数或者一个复杂的深度神经网络。 奖励信号：一个数值，代表着强化学习机采取行动后的即时奖励。最">
+<meta name="twitter:image" content="https://harderchoices.files.wordpress.com/2018/01/unknown-2.png?w=1100">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/07/27/trans2/"/>
+
+
+
+
+
+  <title>强化学习与简单多臂老虎机问题 | The Statistical Smurf</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">The Statistical Smurf</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
+            
+            Schedule
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/27/trans2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="kinleyfanjl">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="The Statistical Smurf">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">强化学习与简单多臂老虎机问题</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-27T17:27:20+08:00">
+                2018-07-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>作者：<a href="https://harderchoices.com/author/jknaith/" target="_blank" rel="noopener">Jeremi</a> </p>
+<h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><p>我在<a href="https://harderchoices.com/rl/" target="_blank" rel="noopener">series hub</a>中介绍过最基本的强化学习的内容。在强化学习里有四个基本的概念会经常出现在相关的文章中，策略、奖励、价值函数以及环境模型。我会跳过模型这个部分，因为我们现在讨论的是不基于模型的学习理论。</p>
+<p><strong>策略</strong>：是强化学习机的核心，代表着决策进行的方式。它可能是一个表格，一个函数或者一个复杂的深度神经网络。</p>
+<p><strong>奖励信号</strong>：一个数值，代表着强化学习机采取行动后的即时奖励。最大化所得奖励是强化学习机的最终目标，为了完成这个目标，我们不断地调整策略。这就像是训练狗狗一样。</p>
+<p><strong>价值函数</strong>：一个函数，用于描述给定状态下的可能获得的远期奖励。这样看来，一个较小的但恒定的常数有可能会优于浮动范围很大的结果。当然，也可能是相反的情况。<br><a id="more"></a></p>
+<h3 id="探索与利用"><a href="#探索与利用" class="headerlink" title="探索与利用"></a>探索与利用</h3><p>Exploration（探索）会放弃一些已知的奖励信息，而去尝试一些新的选择——即在某种状态下，算法也许已经学习到选择什么行动让奖励比较大，但是并不能每次都做出同样的选择，也许另外一个没有尝试过的选择会让奖励更大，即Exploration希望能够探索更多潜在的信息。</p>
+<p>Exploitation（利用）指根据已知的信息最大化奖励。</p>
+<p>其区别也可以简单地理解成，Exploration 算法在搜索全局最优解，是不基于已有经验的；Exploitation 在搜索局部最优解，且最大程度地利用已有经验信息。</p>
+<p>强化学习机就像是个小宠物。它们能够发现第二个碗中包含的东西比第一个碗里的更好，但是当它们开始进食后，就难以发现藏在角落里的大牛排。贪婪的学习机行为也差不多。它会死抓住第一桶金，为自己“谋利”。它总是采取最大化奖励的行动，但是从不会考虑采取其他行为能否在几步之后获得更大的奖励。这就是为什么我们需要探索，因为很有可能一些偶然因素导致我们的学习系统采取了一些随机的行为。</p>
+<p>然而，这里有个问题。我们不能只是盲目地探索最大奖励，因为一个学习机会浪费太多的时间来寻找答案，却没有利用它所学习的经验。一个解决办法就是以高探索率开始，然后在系统积累一定经验后逐渐降低探索率。这种权衡也是很著名的数学问题，没有最合理的答案。</p>
+<h3 id="多臂老虎机"><a href="#多臂老虎机" class="headerlink" title="多臂老虎机"></a>多臂老虎机</h3><p>你肯定知道著名的单臂老虎机，如果你没有达到目标，你不会得到任何奖励。不管怎样，你都是要拉一下杠杆，然后我们假设能随机地获得金钱奖励。由于结果是完全随机的，所以我们训练强化学习机只拉这一个杠杆也无济于事。但是假设一台老虎机有K个杠杆，并且每个杠杆都有随机的奖励，只不过有细微的金额差距。这样的话，一些杠杆和其他杠杆会有些许不同。我们就可以训练一个学习机来帮助我们，而且此处我们还想测试贪婪算法和探索算法的好坏。</p>
+<h3 id="数据"><a href="#数据" class="headerlink" title="数据"></a>数据</h3><p>假设我们考虑的老虎机有十个杠杆，我假定了两个效用函数来生成数据。数据基本都是基于正态分布来获得的，这样以来一些策略行为可能会比其他行为更好，更有区分度。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">generate_problem</span><span class="params">(k)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> np.random.normal(loc=<span class="number">0.0</span>, scale=<span class="number">1</span>, size=<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">generate_reward</span><span class="params">(problem, action)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> np.random.normal(loc=problem[action], scale=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h3><p>再次强调一下，问题与想法都来自一本书：强化学习简介 (Reinforcement Learning: An Introduction) 。</p>
+<p>在介绍代码之前还是要提一些东西。价值函数我们记作<code>q*(a)</code>是一个实值函数。它是给定行动下获得的平均奖励。但是如果学习机知道了价值函数，就没有训练的必要了。这个算法中，我们将要<strong>估计</strong>价值函数并且利用它来进行决策指导。估计的函数我们记作<code>Q(A)</code>（注意：我试着让数学公式尽量少而简单，所以更多地使用代码来）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">k_bandit</span><span class="params">(problem, k, steps, exploration_rate)</span>:</span></span><br><span class="line">    Q = &#123;i: <span class="number">0</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(k)&#125; <span class="comment"># 1. Value function</span></span><br><span class="line">    N = &#123;i: <span class="number">0</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(k)&#125; <span class="comment"># 2. Number of actions, for update rule</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(steps): <span class="comment"># 3. Main loop</span></span><br><span class="line">        explore = random.uniform(<span class="number">0</span>, <span class="number">1</span>) &lt; exploration_rate </span><br><span class="line">        <span class="keyword">if</span> explore:</span><br><span class="line">            action = random.randint(<span class="number">0</span>, k - <span class="number">1</span>) <span class="comment"># 5. Exploration: Choosing random action</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            action = max(Q, key=Q.get) <span class="comment"># 6. Choose action with maximum mean reward</span></span><br><span class="line">            </span><br><span class="line">        reward = generate_reward(problem, action) <span class="comment"># 7. Get reward for current action</span></span><br><span class="line">        N[action] += <span class="number">1</span> <span class="comment"># 8. Update action number</span></span><br><span class="line">        Q[action] += (<span class="number">1</span> / N[action]) * (reward - Q[action]) <span class="comment"># 9. Update value dict</span></span><br></pre></td></tr></table></figure>
+<p>这个算法适用于每个多臂老虎机问题。</p>
+<ol>
+<li>创建价值字典。我们把行动编号当做关键词，平均奖励作为数值，这是最简单的方式。把所有关键词的数值初始化为0。</li>
+<li>创建行动记录字典。我们需要它来更新价值字典的规则。同样都初始化为0.</li>
+<li><code>for</code>循环，给定循环次数；或者利用<code>while</code>循环，直到停止规则。</li>
+<li>探索步骤。我们考虑算法是否需要进一步探索。为了达到目的，我生成一个0到1之间的随机数，并且用它来和探索率进行比较。</li>
+<li>如果代码需要进一步探索，就随机选择一个行动。</li>
+<li>另一种方法，我们选择用<code>Q</code>字典中具有最大数值的关键词所代表的行动。</li>
+<li>得到相应的回报奖励。</li>
+<li>增加行动记录词典中对应的行动次数。</li>
+<li>更新规则。书的作者强调了这很重要，在后续的强化学习任务中都会用到。</li>
+</ol>
+<p>这样就完成了我们的第一个简单的强化学习机。我知道学会强化学习是个很困难的过程，但是这个入门级的例子非常简单且有启发性。</p>
+<h3 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h3><p>我使用不同的探索率运行了这个算法：0.0（贪婪算法），0.01，0.02，0.1，0.2. 而且结果给出了非常有趣的现象，让我们来看几个单独的运行结果：</p>
+<p><img src="https://harderchoices.files.wordpress.com/2018/01/unknown-2.png?w=1100" alt="1.png"></p>
+<p><img src="https://harderchoices.files.wordpress.com/2018/01/unknown-3.png?w=1100" alt=""></p>
+<p><img src="https://harderchoices.files.wordpress.com/2018/01/unknown-4.png?w=1100" alt=""></p>
+<p>但是我们没法从这些孤立的运行结果得到合理的结论。探索算法似乎表现的更好，但也不是一直都好。如果贪婪算法在第一次尝试中就成为最优的方法，就很难说明探索算法的优势。接下来应该参考2000次运行的平均结果：</p>
+<p><img src="https://harderchoices.files.wordpress.com/2018/01/unknown.png?w=1100" alt=""></p>
+<p>现在结论很明显了。在训练的前期，所有算法都几乎一致；接下来，学习速率最快的方法更占优；在训练的后期，那些基于已有经验的方法达到最优。贪婪算法是效果最差的。</p>
+<p>完整的代码见<a href="https://app.vsnipp.com/snippets/show/55" target="_blank" rel="noopener">Vsnipp</a>。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>如果你已经跟着我完成了全部内容，恭喜你，我们一起完成了第一个强化学习任务。虽然问题很简单（甚至没有意义），但是它解释了探索与利用之间的矛盾，从第一天就开始了解这个问题是很重要的。如果继续学习相关内容，会遇到更多类似的矛盾。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Machine-Learning/" rel="tag"># Machine Learning</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/27/trans1/" rel="next" title="用好Jupyter Notebook的十个技巧">
+                <i class="fa fa-chevron-left"></i> 用好Jupyter Notebook的十个技巧
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/27/tran3/" rel="prev" title="在量化交易回测中容易犯的9个错误">
+                在量化交易回测中容易犯的9个错误 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">kinleyfanjl</p>
+              <p class="site-description motion-element" itemprop="description">Ph.D in statistics</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#基础"><span class="nav-number">1.</span> <span class="nav-text">基础</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#探索与利用"><span class="nav-number">2.</span> <span class="nav-text">探索与利用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多臂老虎机"><span class="nav-number">3.</span> <span class="nav-text">多臂老虎机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据"><span class="nav-number">4.</span> <span class="nav-text">数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#算法"><span class="nav-number">5.</span> <span class="nav-text">算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结果"><span class="nav-number">6.</span> <span class="nav-text">结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">kinleyfanjl</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
